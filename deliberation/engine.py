@@ -934,6 +934,7 @@ You have access to tools to gather concrete evidence. Use them actively:
 ```
 TOOL_REQUEST: {"name": "read_file", "arguments": {"path": "src/file.py"}}
 TOOL_REQUEST: {"name": "run_command", "arguments": {"command": "git", "args": ["show", "HEAD"]}}
+TOOL_REQUEST: {"name": "run_command", "arguments": {"command": "jj", "args": ["show", "@"]}}
 TOOL_REQUEST: {"name": "search_code", "arguments": {"pattern": "class.*Adapter", "path": "."}}
 ```
 

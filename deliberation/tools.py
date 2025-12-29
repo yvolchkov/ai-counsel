@@ -567,6 +567,7 @@ class RunCommandTool(BaseTool):
         "wc",
         "find",
         "git",
+        "jj",
         "grep",
         "awk",
         "sed",
