@@ -29,7 +29,7 @@ AI Counsel is an MCP (Model Context Protocol) server that enables true deliberat
 
 **Tool Execution System** (`deliberation/tools.py`, `models/tool_schema.py`)
 - Base: `BaseTool` with `execute()` method and security controls
-- Tools: `ReadFileTool` (configurable size limit), `SearchCodeTool`, `ListFilesTool`, `RunCommandTool` (whitelist: ls, grep, find, cat, head, tail), `GetFileTreeTool` (ASCII output for clean JSON)
+- Tools: `ReadFileTool` (configurable size limit), `SearchCodeTool`, `ListFilesTool`, `RunCommandTool` (whitelist: ls, git, jj, grep, find, cat, head, tail), `GetFileTreeTool` (ASCII output for clean JSON)
 - Orchestrator: `ToolExecutor` parses TOOL_REQUEST markers, validates, routes to tools
 - Security: Whitelisted commands, file size limits, timeout protection (10s default), path exclusion patterns (prevents context contamination)
 - Path Exclusions: Configurable patterns to block access to sensitive directories (e.g., `transcripts/`, `.git/`, `node_modules/`)
@@ -195,7 +195,7 @@ Enables AI models to gather concrete evidence during debates by executing tools.
 1. **ReadFileTool**: Max 1MB, path validation, descriptive errors
 2. **SearchCodeTool**: Uses ripgrep (falls back to grep), output truncation
 3. **ListFilesTool**: Glob patterns, recursive search, directory validation
-4. **RunCommandTool**: Whitelist (ls, grep, find, cat, head, tail), no shell injection
+4. **RunCommandTool**: Whitelist (ls, git, jj, grep, find, cat, head, tail), no shell injection
 
 **Security**:
 - Input validation: Pydantic schema prevents malformed requests

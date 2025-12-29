@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "ai-counsel": {
+      "type": "stdio",
+      "command": "/Users/yurivolchkov/src/ai-counsel/.venv/bin/python",
+      "args": ["/Users/yurivolchkov/src/ai-counsel/server.py"],
+      "env": {}
+    }
+  }
+}

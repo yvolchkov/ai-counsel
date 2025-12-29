@@ -188,6 +188,7 @@ class DeliberationEngine:
         participants: List[Participant],
         previous_responses: List[RoundResponse],
         graph_context: str = "",
+        request_context: str = "",
         working_directory: str | None = None,
     ) -> List[RoundResponse]:
         """
@@ -199,6 +200,7 @@ class DeliberationEngine:
             participants: List of participants for this round
             previous_responses: Responses from previous rounds for context
             graph_context: Optional decision graph context from past deliberations
+            request_context: Optional user-provided context (e.g., pre-fetched diffs)
             working_directory: Optional working directory for tool execution
 
         Returns:
@@ -210,9 +212,15 @@ class DeliberationEngine:
         """
         responses = []
 
-        # Inject graph context into round 1 prompts
-        if round_num == 1 and graph_context:
-            enhanced_prompt_base = f"{graph_context}\n\n## Current Question\n{prompt}"
+        # Inject user-provided context and graph context into round 1 prompts
+        if round_num == 1 and (request_context or graph_context):
+            context_parts = []
+            if request_context:
+                context_parts.append(f"## Provided Context\n\n{request_context}")
+            if graph_context:
+                context_parts.append(graph_context)
+            combined_context = "\n\n".join(context_parts)
+            enhanced_prompt_base = f"{combined_context}\n\n## Current Question\n{prompt}"
         else:
             enhanced_prompt_base = prompt
 
@@ -1088,6 +1096,7 @@ TOOL_REQUEST: {"name": "search_code", "arguments": {"pattern": "class.*Adapter",
                         participants=request.participants,
                         previous_responses=all_responses,
                         graph_context=graph_context,
+                        request_context=request.context or "",
                         working_directory=request.working_directory,
                     ),
                     timeout=round_timeout
